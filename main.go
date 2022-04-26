@@ -44,8 +44,8 @@ func main() {
 			fmt.Println(err)
 			return
 		}
-		// вывод в стдаут пришедшей строки. дебаг, можно удалить.
-		fmt.Printf("%s\n", string(buffer[0:n]))
+//		// вывод в стдаут пришедшей строки. дебаг, можно удалить.
+//		fmt.Printf("%s\n", string(buffer[0:n]))
 
                 // пример лога <190>Apr  6 04:52:38 nginx: 405 1.1.1.1
 		// делим строку на 2 слова по слову нджинкс
@@ -56,11 +56,16 @@ func main() {
 		ip := text[1]
 
 		switch status { // если статус = то добавить в бан
-		case "400":
-			AddBannIp(ip)
-		case "404":
-			AddBannIp(ip)
+//		case "400":
+//                        // вывод в стдаут пришедшей строки. дебаг, можно удалить.
+//                        fmt.Printf("%s\n", string(buffer[0:n]))
+//			AddBannIp(ip)
+//                case "404":
+//                        fmt.Printf("%s\n", string(buffer[0:n]))
+//                        AddBannIp(ip)
+//                }
 		case "405":
+                        fmt.Printf("%s\n", string(buffer[0:n]))
 			AddBannIp(ip)
 		}
 	}
@@ -79,15 +84,15 @@ func IpsetInit() {
                 fmt.Printf("%s", out)
                 fmt.Println(err)
         }
-        // удаляю старое правило иптаблес. чтобы при рестарте не плодились правила
-        // будет ошибка если его нет. поэтому ошибку игнорю.
-        out, _ = exec.Command("/sbin/iptables", "-D", "INPUT", "-p", "tcp", "-m", "multiport", "--dports", "80,443", "-m", "set", "--match-set", "autoban", "src", "-j", "DROP").CombinedOutput()
-        // добавляю новое.
-        out, err = exec.Command("/sbin/iptables", "-I", "INPUT", "-p", "tcp", "-m", "multiport", "--dports", "80,443", "-m", "set", "--match-set", "autoban", "src", "-j", "DROP").CombinedOutput()
-        if err != nil {
-                fmt.Printf("%s", out)
-                fmt.Println(err)
-        }
+//        // удаляю старое правило иптаблес. чтобы при рестарте не плодились правила
+//        // будет ошибка если его нет. поэтому ошибку игнорю.
+//        out, _ = exec.Command("/sbin/iptables", "-D", "INPUT", "-p", "tcp", "-m", "multiport", "--dports", "80,443", "-m", "set", "--match-set", "autoban", "src", "-j", "DROP").CombinedOutput()
+//        // добавляю новое.
+//        out, err = exec.Command("/sbin/iptables", "-I", "INPUT", "-p", "tcp", "-m", "multiport", "--dports", "80,443", "-m", "set", "--match-set", "autoban", "src", "-j", "DROP").CombinedOutput()
+//        if err != nil {
+//                fmt.Printf("%s", out)
+//                fmt.Println(err)
+//        }
 }
 
 // вызов ипсет добавление ип в список blocked-ips
